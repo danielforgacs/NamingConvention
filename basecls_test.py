@@ -3,12 +3,6 @@ import pytest
 
 
 
-# def test_02():
-#     name = basecls.BaseName()
-#     name.source = 1
-#     assert name.source == 1
-
-
 def test_source_is_string():
     name = basecls.BaseName()
 

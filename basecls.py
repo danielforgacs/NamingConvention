@@ -8,13 +8,8 @@ class Descriptor:
 
 class StringType(Descriptor):
     def __set__(self, instance, value):
-        print('aghslfdgh')
-        print('aghslfdgh')
-        print('aghslfdgh')
-        print('aghslfdgh')
         if not isinstance(value, str):
             raise Exception('==> MUST BE STRING')
-
         super().__set__(instance, value)
 
 
@@ -22,8 +17,3 @@ class StringType(Descriptor):
 class BaseName:
     source = StringType()
 
-
-
-
-# c = BaseName()
-# c.source = 1
