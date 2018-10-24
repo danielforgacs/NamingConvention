@@ -2,9 +2,11 @@ import basecls
 import pytest
 
 
-def test_01():
+
+def test_02():
     name = basecls.BaseName()
-    assert hasattr(name, 'source')
+    name.source = 1
+    assert name.source == 1
 
 
 def test_source_is_string():
