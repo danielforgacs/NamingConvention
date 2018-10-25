@@ -6,8 +6,9 @@ import pytest
 def test_source_is_string():
     name = basecls.BaseName()
 
-    with pytest.raises(Exception):
-        name.source = 1
+    for typ in (1, (), [], 1.23):
+        with pytest.raises(Exception):
+            name.source = typ
 
 
 
