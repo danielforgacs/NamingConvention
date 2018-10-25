@@ -19,9 +19,3 @@ class StringType(TypeBase):
 class IntType(TypeBase):
     typebase = int
 
-
-
-class BaseName:
-    source = StringType()
-    count = IntType()
-
