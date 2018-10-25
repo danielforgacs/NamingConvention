@@ -6,14 +6,16 @@ class Descriptor:
         instance.__dict__['source'] = value
 
 
-class StringType(Descriptor):
+class TypeBase(Descriptor):
     def __set__(self, instance, value):
-        if not isinstance(value, str):
+        if not isinstance(value, self.typebase):
             raise Exception('==> MUST BE STRING')
         super().__set__(instance, value)
 
 
+class StringType(TypeBase):
+    typebase = str
 
-class BaseName:
-    source = StringType()
+class IntType(TypeBase):
+    typebase = int
 

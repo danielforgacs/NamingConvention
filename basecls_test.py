@@ -3,13 +3,33 @@ import pytest
 
 
 
-def test_source_is_string():
-    name = basecls.BaseName()
+@pytest.mark.parametrize('value', (
+    1, (), [], 1.23
+    ))
+def test_StringType_is_string_only(value):
+    class TestClass:
+        testattr = basecls.StringType()
 
-    for typ in (1, (), [], 1.23):
-        with pytest.raises(Exception):
-            name.source = typ
+    name = TestClass()
+    name.testattr = '123'
 
+    with pytest.raises(Exception):
+        name.testattr = value
+
+
+
+@pytest.mark.parametrize('value', (
+    '1', (), [], 1.23
+    ))
+def test_IntType_is_int_only(value):
+    class TestClass:
+        testattr = basecls.IntType()
+
+    name = TestClass()
+    name.testattr = 123
+
+    with pytest.raises(Exception):
+        name.testattr = value
 
 
 
