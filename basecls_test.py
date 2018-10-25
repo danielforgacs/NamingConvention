@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.mark.parametrize('value', (
-    1, (), [], 1.23
+    1, (), [], 1.23,
     ))
 def test_StringType_is_string_only(value):
     class TestClass:
@@ -19,7 +19,7 @@ def test_StringType_is_string_only(value):
 
 
 @pytest.mark.parametrize('value', (
-    '1', (), [], 1.23
+    '1', (), [], 1.23,
     ))
 def test_IntType_is_int_only(value):
     class TestClass:
@@ -35,8 +35,9 @@ def test_IntType_is_int_only(value):
 
 @pytest.mark.parametrize('value', (
     '',
-    'a'
-    'aaa'
+    'a',
+    'aaaa',
+    1,
     ))
 def test_SizedString_has_limited_lenght(value):
     class TestClass:
