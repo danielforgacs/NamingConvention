@@ -43,7 +43,7 @@ class Optioned(Descriptor):
         self.options = options
 
     def __set__(self, instance, value):
-        if not value in options:
+        if not value in self.options:
             raise Exception('==> NOT AN OPTION')
         super().__set__(instance, value)
 

@@ -53,7 +53,10 @@ def test_SizedString_has_limited_lenght(value):
         name.testattr = value
 
 
-def test_optioned():
+@pytest.mark.parametrize('value', (
+    1, 'x', '23fks',
+    ))
+def test_optioned(value):
     class TestClass:
         testattr = basecls.Optioned(
             attr='testattr',
@@ -62,8 +65,14 @@ def test_optioned():
     name = TestClass()
     name.testattr = 'a'
 
-    # with pytest.raises(Exception):
-    #     name.testattr = 'c'
+    assert name.testattr == 'a'
+
+    name.testattr = 'b'
+
+    assert name.testattr == 'b'
+
+    with pytest.raises(Exception):
+        name.testattr = value
 
 
 
