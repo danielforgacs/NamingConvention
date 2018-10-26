@@ -1,9 +1,12 @@
 class Descriptor:
+    def __init__(self, attr):
+        self.attr = attr
+
     def __get__(self, instance, cls):
-        return instance.__dict__['source']
+        return instance.__dict__[self.attr]
 
     def __set__(self, instance, value):
-        instance.__dict__['source'] = value
+        instance.__dict__[self.attr] = value
 
 
 class TypeBase(Descriptor):
@@ -20,7 +23,8 @@ class IntType(TypeBase):
     typebase = int
 
 class SizedBase(Descriptor):
-    def __init__(self, lenmin, lenmax):
+    def __init__(self, lenmin, lenmax, **kwargs):
+        super().__init__(**kwargs)
         self.lenmin = lenmin
         self.lenmax = lenmax
 

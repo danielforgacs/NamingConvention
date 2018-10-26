@@ -8,7 +8,7 @@ import pytest
     ))
 def test_StringType_is_string_only(value):
     class TestClass:
-        testattr = basecls.StringType()
+        testattr = basecls.StringType(attr='testattr')
 
     name = TestClass()
     name.testattr = '123'
@@ -23,7 +23,7 @@ def test_StringType_is_string_only(value):
     ))
 def test_IntType_is_int_only(value):
     class TestClass:
-        testattr = basecls.IntType()
+        testattr = basecls.IntType(attr='testattr')
 
     name = TestClass()
     name.testattr = 123
@@ -41,7 +41,10 @@ def test_IntType_is_int_only(value):
     ))
 def test_SizedString_has_limited_lenght(value):
     class TestClass:
-        testattr = basecls.SizedString(lenmin=2, lenmax=3)
+        testattr = basecls.SizedString(
+            attr='testattr',
+            lenmin=2,
+            lenmax=3)
 
     name = TestClass()
     name.testattr = '12'
