@@ -53,6 +53,19 @@ def test_SizedString_has_limited_lenght(value):
         name.testattr = value
 
 
+def test_optioned():
+    class TestClass:
+        testattr = basecls.Optioned(
+            attr='testattr',
+            options=('a', 'b'))
+
+    name = TestClass()
+    name.testattr = 'a'
+
+    # with pytest.raises(Exception):
+    #     name.testattr = 'c'
+
+
 
 if __name__ == '__main__':
     pytest.main([

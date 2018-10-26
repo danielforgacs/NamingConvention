@@ -37,7 +37,15 @@ class SizedString(StringType, SizedBase):
     pass
 
 
+class Optioned(Descriptor):
+    def __init__(self, options, **kwargs):
+        super().__init__(**kwargs)
+        self.options = options
 
+    def __set__(self, instance, value):
+        if not value in options:
+            raise Exception('==> NOT AN OPTION')
+        super().__set__(instance, value)
 
 # class TEMP:
 #     k = SizedString(lenmin=2, lenmax=3)
