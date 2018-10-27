@@ -75,8 +75,23 @@ def test_optioned(value):
         name.testattr = value
 
 
-def test_LimitedInt():
-    pass
+@pytest.mark.parametrize('value', (
+    -1, 0, 4, 5, 6, 7,
+    ))
+def test_LimitedInt(value):
+    class TestClass:
+        testattr = basecls.LimitedInt(
+            attr='testattr',
+            minint=1,
+            maxint=3)
+
+    name = TestClass()
+    name.testattr = 1
+
+    assert name.testattr == 1
+
+    with pytest.raises(Exception):
+        name.testattr = value
 
 
 

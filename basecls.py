@@ -57,7 +57,7 @@ class K:
     l = LimitedInt(minint=3, maxint=7, attr='l')
 
 k = K()
-k.l = 's'
+k.l = 4
 # =================================================
 
 class Optioned(Descriptor):
