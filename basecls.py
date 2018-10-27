@@ -125,6 +125,11 @@ class BaseNameMeta(type):
 class BaseName(metaclass=BaseNameMeta):
     conf = CONFIG
 
+    def __bool__(self):
+        allvalues = (getattr(self, attr) for attr in self.conf.keys())
+        allset = all(allvalues)
+        return allset
+
 
 name = BaseName()
 name.a = 2
