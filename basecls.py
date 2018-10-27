@@ -64,14 +64,17 @@ class BaseNameMeta(type):
         newcls = type.__new__(cls, name, bases, newnamespace)
         return newcls
 
+
+
 class BaseName(metaclass=BaseNameMeta):
     conf = CONFIG
 
 
 name = BaseName()
 name.a = 1
-# print(dir(name))
-# print(vars(name))
+name.b = 1
+print(dir(name))
+print(vars(name))
 # print(vars(BaseName))
 # print(BaseName.members)
 # print(name.members)
