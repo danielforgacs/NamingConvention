@@ -47,6 +47,36 @@ class Optioned(Descriptor):
             raise Exception('==> NOT AN OPTION')
         super().__set__(instance, value)
 
+
+
+
+CONFIG = {
+    'a': None,
+}
+
+
+class BaseNameMeta(type):
+    pass
+    def __new__(cls, name, bases, namespace):
+        print(namespace)
+        namespace = {
+            'aaa': Optioned(options=(1, 2), attr='aaa')
+        }
+        newcls = type(name, bases, namespace)
+        return newcls
+
+class BaseName(metaclass=BaseNameMeta):
+    conf = CONFIG
+
+
+name = BaseName()
+# name.aaa = 3
+# print(dir(name))
+# print(vars(name))
+# print(vars(BaseName))
+# print(BaseName.members)
+# print(name.members)
+
 # class TEMP:
 #     k = SizedString(lenmin=2, lenmax=3)
 
