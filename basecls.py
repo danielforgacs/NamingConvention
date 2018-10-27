@@ -51,18 +51,17 @@ class Optioned(Descriptor):
 
 
 CONFIG = {
-    'a': None,
+    'a': Optioned(options=(1, 2), attr='a'),
 }
 
 
 class BaseNameMeta(type):
     pass
     def __new__(cls, name, bases, namespace):
-        print(namespace)
-        namespace = {
-            'aaa': Optioned(options=(1, 2), attr='aaa')
-        }
-        newcls = type(name, bases, namespace)
+        newnamespace = {}
+        for attr, attrtype in namespace['conf'].items():
+            newnamespace[attr] = attrtype
+        newcls = type.__new__(cls, name, bases, newnamespace)
         return newcls
 
 class BaseName(metaclass=BaseNameMeta):
@@ -70,7 +69,7 @@ class BaseName(metaclass=BaseNameMeta):
 
 
 name = BaseName()
-# name.aaa = 3
+name.a = 1
 # print(dir(name))
 # print(vars(name))
 # print(vars(BaseName))
