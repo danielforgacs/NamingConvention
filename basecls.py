@@ -51,8 +51,7 @@ class Optioned(Descriptor):
 
 
 CONFIG = {
-    # 'a': Optioned(options=(1, 2), attr='a'),
-    'a': {'optioned': (1, 2)}
+    'a': {'choices': (1, 2)}
 }
 
 
@@ -61,7 +60,7 @@ class BaseNameMeta(type):
     def __new__(cls, name, bases, namespace):
         newnamespace = {}
         for attr, attrtype in namespace['conf'].items():
-            if tuple(attrtype.keys())[0] == 'optioned':
+            if tuple(attrtype.keys())[0] == 'choices':
                 choices = tuple(attrtype.values())[0]
                 newnamespace[attr] = Optioned(options=choices, attr=attr)
 
