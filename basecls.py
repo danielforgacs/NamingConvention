@@ -110,13 +110,12 @@ class BaseNameMeta(type):
     configured in the "conf" attr in the classes.
     """
     def __new__(cls, name, bases, namespace):
-        newnamespace = {}
         for attr, attrtype in namespace['conf'].items():
             if tuple(attrtype.keys())[0] == 'choices':
                 choices = tuple(attrtype.values())[0]
-                newnamespace[attr] = Optioned(options=choices, attr=attr)
+                namespace[attr] = Optioned(options=choices, attr=attr)
 
-        newcls = type.__new__(cls, name, bases, newnamespace)
+        newcls = type.__new__(cls, name, bases, namespace)
         return newcls
 
 
