@@ -14,6 +14,8 @@ class Descriptor:
         self.attr = attr
 
     def __get__(self, instance, cls):
+        if self.attr not in instance.__dict__:
+            return None
         return instance.__dict__[self.attr]
 
     def __set__(self, instance, value):
