@@ -75,6 +75,10 @@ def test_optioned(value):
         name.testattr = value
 
 
+def test_LimitedInt():
+    pass
+
+
 
 if __name__ == '__main__':
     pytest.main([

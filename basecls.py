@@ -22,7 +22,7 @@ class StringType(TypeBase):
 class IntType(TypeBase):
     typebase = int
 
-class SizedBase(Descriptor):
+class SizedStrBase(Descriptor):
     def __init__(self, lenmin, lenmax, **kwargs):
         super().__init__(**kwargs)
         self.lenmin = lenmin
@@ -33,9 +33,32 @@ class SizedBase(Descriptor):
             raise Exception('==> MUST BE LENGTH: %i - %i' % (self.lenmin, self.lenmax))
         super().__set__(instance, value)
 
-class SizedString(StringType, SizedBase):
+class SizedString(StringType, SizedStrBase):
     pass
 
+
+class LimitedIntBase(Descriptor):
+    def __init__(self, minint, maxint, **kwargs):
+        super().__init__(**kwargs)
+        self.minint = minint
+        self.maxint = maxint
+
+    def __set__(self, instance, value):
+        if not self.minint <= value <= self.maxint:
+            raise Exception('==> MUST BE  %i < x < %i' % (self.minint, self.maxint))
+        super().__set__(instance, value)
+
+
+class LimitedInt(IntType, LimitedIntBase):
+    pass
+
+# =================================================
+class K:
+    l = LimitedInt(minint=3, maxint=7, attr='l')
+
+k = K()
+k.l = 's'
+# =================================================
 
 class Optioned(Descriptor):
     def __init__(self, options, **kwargs):
@@ -80,7 +103,7 @@ name.b = 0
 # name.a = 0
 # name.b = 0
 # print(dir(name))
-print(vars(name))
+# print(vars(name))
 # print(vars(BaseName))
 # print(BaseName.members)
 # print(name.members)
