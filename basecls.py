@@ -52,13 +52,6 @@ class LimitedIntBase(Descriptor):
 class LimitedInt(IntType, LimitedIntBase):
     pass
 
-# =================================================
-class K:
-    l = LimitedInt(minint=3, maxint=7, attr='l')
-
-k = K()
-k.l = 4
-# =================================================
 
 class Optioned(Descriptor):
     def __init__(self, options, **kwargs):
