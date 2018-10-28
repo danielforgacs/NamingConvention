@@ -111,6 +111,10 @@ class BaseNameMeta(type):
         set up based on the config.
         """
         for attr, attrtype in namespace['conf'].items():
+            if not isinstance(attrtype, dict):
+                namespace[attr] = None
+                continue
+
             if tuple(attrtype.keys())[0] == 'choices':
                 choices = tuple(attrtype.values())[0]
                 namespace[attr] = Optioned(options=choices, attr=attr)
@@ -130,6 +134,7 @@ CONFIG = {
     'b': {'choices': ('a', 'b')},
     'c': {'number': None},
     'd': {'limitednumber': (2, 5)},
+    'e': None,
 }
 
 class BaseName(metaclass=BaseNameMeta):
@@ -155,7 +160,8 @@ name = BaseName()
 name.a = 1
 name.b = 'a'
 name.c = 1
-name.d = 2
+name.d = 4
+name.e = 'E'
 
 print(bool(name))
 print(name.name)
