@@ -14,6 +14,8 @@ class Descriptor:
         self.attr = attr
 
     def __get__(self, instance, cls):
+        if self.attr not in instance.__dict__:
+            return None
         return instance.__dict__[self.attr]
 
     def __set__(self, instance, value):
@@ -97,12 +99,6 @@ class Optioned(Descriptor):
 
 
 
-
-CONFIG = {
-    'a': {'choices': (1, 2)}
-}
-
-
 class BaseNameMeta(type):
     """
     Metaclass to create the string classes.
@@ -110,27 +106,69 @@ class BaseNameMeta(type):
     configured in the "conf" attr in the classes.
     """
     def __new__(cls, name, bases, namespace):
-        newnamespace = {}
+        """
+        this is where string element classes get
+        set up based on the config.
+        """
         for attr, attrtype in namespace['conf'].items():
+            if not isinstance(attrtype, dict):
+                namespace[attr] = None
+                continue
+
             if tuple(attrtype.keys())[0] == 'choices':
                 choices = tuple(attrtype.values())[0]
-                newnamespace[attr] = Optioned(options=choices, attr=attr)
+                namespace[attr] = Optioned(options=choices, attr=attr)
+            elif tuple(attrtype.keys())[0] == 'number':
+                namespace[attr] = IntType(attr=attr)
+            elif tuple(attrtype.keys())[0] == 'limitednumber':
+                minint, maxint = tuple(attrtype.values())[0]
+                namespace[attr] = LimitedInt(minint=minint, maxint=maxint, attr=attr)
 
-        newcls = type.__new__(cls, name, bases, newnamespace)
+        newcls = type.__new__(cls, name, bases, namespace)
         return newcls
 
 
 
+CONFIG = {
+    'a': {'choices': (1, 2)},
+    'b': {'choices': ('a', 'b')},
+    'c': {'number': None},
+    'd': {'limitednumber': (2, 5)},
+    'e': None,
+}
+
 class BaseName(metaclass=BaseNameMeta):
     conf = CONFIG
 
+    @property
+    def name(self):
+        if not self:
+            return None
+
+        elements = (getattr(self, attr) for attr in self.conf.keys())
+        name = '_'.join(str(element) for element in elements)
+
+        return name
+
+    def __bool__(self):
+        allvalues = (getattr(self, attr) for attr in self.conf.keys())
+        allset = all(allvalues)
+        return allset
+
 
 name = BaseName()
-name.a = 2
-name.b = 0
+name.a = 1
+name.b = 'a'
+name.c = 1
+name.d = 4
+name.e = 'E'
+
+print(bool(name))
+print(name.name)
 
 # name.a = 0
 # name.b = 0
+# print(name.conf)
 # print(dir(name))
 # print(vars(name))
 # print(vars(BaseName))
