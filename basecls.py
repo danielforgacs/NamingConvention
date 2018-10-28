@@ -106,6 +106,10 @@ class BaseNameMeta(type):
     configured in the "conf" attr in the classes.
     """
     def __new__(cls, name, bases, namespace):
+        """
+        this is where string element classes get
+        set up based on the config.
+        """
         for attr, attrtype in namespace['conf'].items():
             if tuple(attrtype.keys())[0] == 'choices':
                 choices = tuple(attrtype.values())[0]
