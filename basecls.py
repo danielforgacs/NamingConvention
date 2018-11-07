@@ -132,7 +132,6 @@ VARIANTCONF = {
 }
 
 class VariantName(NameBase, metaclass=NameMeta):
-    __metaclass__ = NameMeta
     config = VARIANTCONF
 
 
