@@ -114,7 +114,7 @@ class NameBase(object):
         result = '_'.join([str(getattr(self, attr)) for attr in self.config.keys()])
         return result
 
-    def __nonzero__(self):
+    def __bool__(self):
         result = all([getattr(self, attr) for attr in self.config.keys()])
         return result
 
